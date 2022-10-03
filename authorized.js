@@ -1,7 +1,10 @@
 const authorized = (cleared = []) => (req, res, next) => {
     const username = req.headers["x-replit-user-name"]
+    const authorization = req.headers["authorization"]
 
-    if (username && cleared.includes(username)) {
+    const token = authorization.split(" ").pop()
+
+    if ((username && cleared.includes(username)) || token === process.env["BEARER_BYPASS"]) {
         next()
     } else {
         res.status(403).json({

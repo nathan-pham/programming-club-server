@@ -9,6 +9,6 @@ const schema = new PolySchema("submitProject", {
     name: longerThanThree,
     link: longerThanThree,
     description: longerThanThree,
-}, true)
+})
 
 export default schema

@@ -59,9 +59,8 @@ app.get("/projects", async (req, res) => {
         projectKeys.map(key => db.get(key))
     )
 
-    // only return projects that have been "cleared"
-    // also re-add the name back
-    res.json(projects.filter(project => project.cleared).map((project, i) => ({
+    // re-add the name back
+    res.json(projects.map((project, i) => ({
         ...project,
         name: projectKeys[i],
     })))
@@ -80,8 +79,11 @@ app.post("/submitProject", async (req, res) => {
         return res.json({ errors })
     }
 
+    console.log(req.body, data.name)
+
     const existing = await db.get(data.name)
     if (existing) {
+        console.log(existing)
         return res.json({ errors: ["Project name already exists"] })
     }
 
